@@ -1,5 +1,6 @@
 #map {
-    height: 100vh;
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
 }
 .review-popup {
     text-align: left;
