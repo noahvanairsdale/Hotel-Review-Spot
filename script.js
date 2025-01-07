@@ -1,9 +1,14 @@
-// Initialize the map
-const map = L.map('map').setView([20, 0], 2);
+// Initialize the map with center and zoom level
+const map = L.map('map', {
+    center: [20, 0],  // Default center of the map (coordinates: 20, 0)
+    zoom: 2,          // Initial zoom level (zoomed out a bit)
+    minZoom: 2,       // Minimum zoom level (prevents zooming out too much)
+    maxZoom: 10       // Maximum zoom level (prevents zooming in too much)
+});
 
-// Add OpenStreetMap tiles
+// Add OpenStreetMap tiles (base layer)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
+    maxZoom: 18,  // Max zoom allowed for the tile layer
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
@@ -35,7 +40,7 @@ hotels.forEach(hotel => {
     marker.bindPopup(renderPopupContent(hotel));
 });
 
-// Function to render popup content
+// Function to render popup content for hotels
 function renderPopupContent(hotel) {
     const reviewList = hotel.reviews
         .map(review => `<p><strong>${review.author}:</strong> ${review.text}</p>`)
