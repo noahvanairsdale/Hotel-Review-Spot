@@ -1,0 +1,21 @@
+#map {
+    height: 100vh;
+}
+.review-popup {
+    text-align: left;
+}
+.review-popup iframe {
+    width: 100%;
+    max-width: 400px;
+    height: 225px;
+}
+.review-list {
+    margin-top: 10px;
+}
+.review-form {
+    margin-top: 20px;
+}
+.review-form textarea {
+    width: 100%;
+    height: 60px;
+}
