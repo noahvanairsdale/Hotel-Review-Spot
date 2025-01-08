@@ -1,126 +1,46 @@
-// Initialize the map with center and zoom level for the USA
-const map = L.map('map', {
-    center: [39.8283, -98.5795],  // Center of the USA (Kansas)
-    zoom: 4,                      // Initial zoom level
-    minZoom: 4,                   // Minimum zoom level (prevents zooming out too far)
-    maxZoom: 8,                   // Maximum zoom level (prevents zooming in too much)
-    maxBounds: [
-        [24.396308, -125.0],      // Southwest corner (bottom-left) of the USA
-        [49.384358, -66.93457]    // Northeast corner (top-right) of the USA
-    ],                            // Boundaries of the USA (not allowing zoom or panning outside the USA)
-    maxBoundsViscosity: 1.0       // Keeps map within bounds when zooming or panning
-});
+// Initialize map
+var map = L.map('map').setView([51.505, -0.09], 2); // Default view (zoom out to show entire world)
 
-// Add OpenStreetMap tiles (base layer)
+// Set bounds for the map so it doesn't zoom out beyond the world
+var bounds = [[-90, -180], [90, 180]]; // Coordinates for full world bounds
+map.setMaxBounds(bounds);
+
+// Add tile layer (OpenStreetMap)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,  // Max zoom allowed for the tile layer
-    attribution: '© OpenStreetMap contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-// Example hotel data (USA only)
-const hotels = [
-    {
-        id: 1,
-        name: "Hotel A",
-        coords: [48.8566, -122.3522],  // San Francisco, CA
-        video: "https://www.youtube.com/embed/example1",
-        website: "https://www.hotela.com",
-        phone: "+1 415-555-1234",
-        reviews: []
-    },
-    {
-        id: 2,
-        name: "Hotel B",
-        coords: [40.7128, -74.0060],  // New York City, NY
-        video: "https://www.youtube.com/embed/example2",
-        website: "https://www.hotelb.com",
-        phone: "+1 212-555-1234",
-        reviews: []
-    }
+// Hotel data (just a sample)
+var hotels = [
+    { name: 'Example Hotel', lat: 51.505, lon: -0.09, rating: 9, link: 'https://www.example.com', phone: '(123) 456-7890', video: 'your-review-video.mp4' }
 ];
 
-// Render hotel pins on the map
-const markers = {};
-hotels.forEach(hotel => {
-    const marker = L.marker(hotel.coords).addTo(map);
-    marker.bindPopup(renderPopupContent(hotel));
-    markers[hotel.name.toLowerCase()] = marker;  // Store marker by hotel name for search functionality
+// Add pins for each hotel on the map
+hotels.forEach(function(hotel) {
+    var marker = L.marker([hotel.lat, hotel.lon]).addTo(map);
+    marker.bindPopup(`<b>${hotel.name}</b><br><a href="${hotel.link}" target="_blank">Visit Website</a><br>Rating: ${hotel.rating}/10`);
 });
 
-// Function to render popup content for hotels
-function renderPopupContent(hotel) {
-    const reviewList = hotel.reviews
-        .map(review => `<p><strong>${review.author}:</strong> ${review.text}</p>`)
-        .join('');
-
-    return `
-        <div class="review-popup">
-            <h3>${hotel.name}</h3>
-            <iframe src="${hotel.video}" frameborder="0" allowfullscreen></iframe>
-            <p><strong>Website:</strong> <a href="${hotel.website}" target="_blank">${hotel.website}</a></p>
-            <p><strong>Phone:</strong> ${hotel.phone}</p>
-            <div class="review-list">
-                <h4>User Reviews:</h4>
-                ${reviewList || "<p>No reviews yet. Be the first to add one!</p>"}
-            </div>
-            <form class="review-form" onsubmit="addReview(event, ${hotel.id})">
-                <h4>Add Your Review:</h4>
-                <textarea name="reviewText" placeholder="Write your review..." required></textarea>
-                <input type="text" name="author" placeholder="Your name" required />
-                <input type="email" name="email" placeholder="Optional: Your email" />
-                <label for="rating">Rate your stay (1-10):</label>
-                <select name="rating" required>
-                    <option value="" disabled selected>Select a rating</option>
-                    <option value="1">1 - Poor</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10 - Excellent</option>
-                </select>
-                <button type="submit">Submit Review</button>
-            </form>
-        </div>
-    `;
-}
-
-// Function to add a user review
-function addReview(event, hotelId) {
+// Handle review form submission
+document.getElementById('review-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const form = event.target;
-    const reviewText = form.reviewText.value;
-    const author = form.author.value;
-    const email = form.email.value;
-    const rating = form.rating.value;
+    // Get form values
+    var hotelName = document.getElementById('hotel-name').value;
+    var reviewText = document.getElementById('review-text').value;
+    var userEmail = document.getElementById('user-email').value;
+    var rating = document.getElementById('rating').value;
+    var videoLink = document.getElementById('video-link').value;
 
-    const hotel = hotels.find(h => h.id === hotelId);
-    if (hotel) {
-        hotel.reviews.push({ text: reviewText, author, email, rating });
-        map.eachLayer(layer => {
-            if (layer.getLatLng && layer.getLatLng().equals(hotel.coords)) {
-                layer.setPopupContent(renderPopupContent(hotel));
-            }
-        });
-    }
+    // Create a new hotel review pin
+    var userMarker = L.marker([51.505, -0.09]).addTo(map); // For simplicity, placing all user reviews in the same location (51.505, -0.09)
+    userMarker.bindPopup(`
+        <b>${hotelName}</b><br>
+        Rating: ${rating}/10<br>
+        <p>${reviewText}</p>
+        <a href="${videoLink}" target="_blank">Watch Review Video</a>
+    `);
 
-    form.reset();
-}
-
-// Search functionality to find hotels by name
-const searchInput = document.getElementById('hotel-search');
-searchInput.addEventListener('input', function() {
-    const query = searchInput.value.toLowerCase();
-    Object.values(markers).forEach(marker => {
-        const hotelName = marker.getPopup().getContent().toLowerCase();
-        if (hotelName.includes(query)) {
-            marker.addTo(map);  // Show marker if it matches the query
-        } else {
-            map.removeLayer(marker);  // Hide marker if it doesn't match
-        }
-    });
+    // Clear the form after submission
+    document.getElementById('review-form').reset();
 });
