@@ -64,19 +64,22 @@ function renderPopupContent(hotel) {
             <form class="review-form" onsubmit="addReview(event, ${hotel.id})">
                 <h4>Add Your Review:</h4>
                 <textarea name="reviewText" placeholder="Write your review..." required></textarea>
-                <input type="email" name="email" placeholder="Your email (optional)" />
-                <div class="rating">
-                    <input type="radio" id="rating10-${hotel.id}" name="rating-${hotel.id}" value="10" /><label for="rating10-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating9-${hotel.id}" name="rating-${hotel.id}" value="9" /><label for="rating9-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating8-${hotel.id}" name="rating-${hotel.id}" value="8" /><label for="rating8-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating7-${hotel.id}" name="rating-${hotel.id}" value="7" /><label for="rating7-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating6-${hotel.id}" name="rating-${hotel.id}" value="6" /><label for="rating6-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating5-${hotel.id}" name="rating-${hotel.id}" value="5" /><label for="rating5-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating4-${hotel.id}" name="rating-${hotel.id}" value="4" /><label for="rating4-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating3-${hotel.id}" name="rating-${hotel.id}" value="3" /><label for="rating3-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating2-${hotel.id}" name="rating-${hotel.id}" value="2" /><label for="rating2-${hotel.id}">⭐</label>
-                    <input type="radio" id="rating1-${hotel.id}" name="rating-${hotel.id}" value="1" /><label for="rating1-${hotel.id}">⭐</label>
-                </div>
+                <input type="text" name="author" placeholder="Your name" required />
+                <input type="email" name="email" placeholder="Optional: Your email" />
+                <label for="rating">Rate your stay (1-10):</label>
+                <select name="rating" required>
+                    <option value="" disabled selected>Select a rating</option>
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10 - Excellent</option>
+                </select>
                 <button type="submit">Submit Review</button>
             </form>
         </div>
@@ -91,7 +94,7 @@ function addReview(event, hotelId) {
     const reviewText = form.reviewText.value;
     const author = form.author.value;
     const email = form.email.value;
-    const rating = form.querySelector('input[name="rating-' + hotelId + '"]:checked') ? form.querySelector('input[name="rating-' + hotelId + '"]:checked').value : 'No rating';
+    const rating = form.rating.value;
 
     const hotel = hotels.find(h => h.id === hotelId);
     if (hotel) {
