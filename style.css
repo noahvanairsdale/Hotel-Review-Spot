@@ -1,72 +1,22 @@
-/* Global Styles */
-body {
-    font-family: 'Raleway', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-header {
-    background-color: #333;
-    color: white;
-    padding: 15px;
-    text-align: center;
-}
-
-#search-container {
-    padding: 10px;
-    text-align: center;
-}
-
-input[type="text"], input[type="email"], input[type="url"], textarea {
-    width: 80%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 1rem;
-}
-
-textarea {
-    height: 150px;
-}
-
-button {
-    padding: 10px 15px;
-    background-color: #333;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #444;
-}
-
-/* Reviews Section */
-#reviews-section {
-    padding: 20px;
-    background-color: #f4f4f4;
-    text-align: center;
-}
-
-#reviews-section h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-/* Map Section */
 #map {
-    height: 50vh;
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+}
+.review-popup {
+    text-align: left;
+}
+.review-popup iframe {
     width: 100%;
+    max-width: 400px;
+    height: 225px;
+}
+.review-list {
+    margin-top: 10px;
+}
+.review-form {
     margin-top: 20px;
 }
-
-/* User Review Form */
-#user-review-form {
-    padding: 20px;
-    background-color: #f4f4f4;
-    text-align: center;
-    margin-top: 20px;
+.review-form textarea {
+    width: 100%;
+    height: 60px;
 }
