@@ -1,95 +1,32 @@
-// Initialize the map with center and zoom level for the USA
-const map = L.map('map', {
-    center: [39.8283, -98.5795],  // Center of the USA (Kansas)
-    zoom: 4,                      // Initial zoom level
-    minZoom: 4,                   // Minimum zoom level (prevents zooming out too far)
-    maxZoom: 8,                   // Maximum zoom level (prevents zooming in too much)
-    maxBounds: [
-        [24.396308, -125.0],      // Southwest corner (bottom-left) of the USA
-        [49.384358, -66.93457]    // Northeast corner (top-right) of the USA
-    ],                            // Boundaries of the USA (not allowing zoom or panning outside the USA)
-    maxBoundsViscosity: 1.0       // Keeps map within bounds when zooming or panning
-});
+// Initialize the map
+var map = L.map('map').setView([51.505, -0.09], 13);  // Set initial view (latitude, longitude, zoom level)
 
-// Add OpenStreetMap tiles (base layer)
+// Add the OpenStreetMap tile layer (you can change this to another map source)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,  // Max zoom allowed for the tile layer
-    attribution: '© OpenStreetMap contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-// Example hotel data (USA only)
-const hotels = [
-    {
-        id: 1,
-        name: "Hotel A",
-        coords: [48.8566, -122.3522],  // San Francisco, CA
-        video: "https://www.youtube.com/embed/example1",
-        website: "https://www.hotela.com",
-        phone: "+1 415-555-1234",
-        reviews: []
-    },
-    {
-        id: 2,
-        name: "Hotel B",
-        coords: [40.7128, -74.0060],  // New York City, NY
-        video: "https://www.youtube.com/embed/example2",
-        website: "https://www.hotelb.com",
-        phone: "+1 212-555-1234",
-        reviews: []
-    }
+// Sample hotel data with coordinates
+var hotels = [
+    { name: 'Hotel Example', lat: 51.505, lon: -0.09, videoUrl: 'your-review-video.mp4' },
+    { name: 'Hotel 2', lat: 51.515, lon: -0.1, videoUrl: 'hotel-2-video.mp4' },
+    { name: 'Hotel 3', lat: 51.525, lon: -0.12, videoUrl: 'hotel-3-video.mp4' }
 ];
 
-// Render hotel pins on the map
-hotels.forEach(hotel => {
-    const marker = L.marker(hotel.coords).addTo(map);
-    marker.bindPopup(renderPopupContent(hotel));
+// Function to add pins (markers) to the map
+hotels.forEach(function(hotel) {
+    var marker = L.marker([hotel.lat, hotel.lon]).addTo(map);
+    marker.bindPopup(`<b>${hotel.name}</b><br><a href="${hotel.videoUrl}" target="_blank">Watch Review</a>`);
 });
 
-// Function to render popup content for hotels
-function renderPopupContent(hotel) {
-    const reviewList = hotel.reviews
-        .map(review => `<p><strong>${review.author}:</strong> ${review.text}</p>`)
-        .join('');
-
-    return `
-        <div class="review-popup">
-            <h3>${hotel.name}</h3>
-            <iframe src="${hotel.video}" frameborder="0" allowfullscreen></iframe>
-            <p><strong>Website:</strong> <a href="${hotel.website}" target="_blank">${hotel.website}</a></p>
-            <p><strong>Phone:</strong> ${hotel.phone}</p>
-            <div class="review-list">
-                <h4>User Reviews:</h4>
-                ${reviewList || "<p>No reviews yet. Be the first to add one!</p>"}
-            </div>
-            <form class="review-form" onsubmit="addReview(event, ${hotel.id})">
-                <h4>Add Your Review:</h4>
-                <textarea name="reviewText" placeholder="Write your review..." required></textarea>
-                <input type="text" name="author" placeholder="Your name" required />
-                <input type="text" name="videoLink" placeholder="Optional: Video URL" />
-                <button type="submit">Submit Review</button>
-            </form>
-        </div>
-    `;
-}
-
-// Function to add a user review
-function addReview(event, hotelId) {
-    event.preventDefault();
-
-    const form = event.target;
-    const reviewText = form.reviewText.value;
-    const author = form.author.value;
-    const videoLink = form.videoLink.value;
-
-    const hotel = hotels.find(h => h.id === hotelId);
-    if (hotel) {
-        hotel.reviews.push({ text: reviewText, author, video: videoLink });
-        map.eachLayer(layer => {
-            if (layer.getLatLng && layer.getLatLng().equals(hotel.coords)) {
-                layer.setPopupContent(renderPopupContent(hotel));
-            }
-        });
-    }
-
-    form.reset();
-}
+// Search function
+document.getElementById('search-input').addEventListener('input', function(event) {
+    var query = event.target.value.toLowerCase();
+    hotels.forEach(function(hotel) {
+        if (hotel.name.toLowerCase().includes(query)) {
+            // Show pin if match
+            L.marker([hotel.lat, hotel.lon]).addTo(map)
+                .bindPopup(`<b>${hotel.name}</b><br><a href="${hotel.videoUrl}" target="_blank">Watch Review</a>`);
+        }
+    });
+});
