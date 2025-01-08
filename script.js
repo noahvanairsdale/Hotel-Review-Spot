@@ -40,9 +40,11 @@ const hotels = [
 ];
 
 // Render hotel pins on the map
+const markers = {};
 hotels.forEach(hotel => {
     const marker = L.marker(hotel.coords).addTo(map);
     marker.bindPopup(renderPopupContent(hotel));
+    markers[hotel.name.toLowerCase()] = marker;  // Store marker by hotel name for search functionality
 });
 
 // Function to render popup content for hotels
@@ -109,24 +111,16 @@ function addReview(event, hotelId) {
     form.reset();
 }
 
-// Add new marker on map click
-map.on('click', function (event) {
-    const newMarkerCoords = event.latlng;
-    const newHotelId = hotels.length + 1;
-    const newHotel = {
-        id: newHotelId,
-        name: `New Hotel ${newHotelId}`,
-        coords: [newMarkerCoords.lat, newMarkerCoords.lng],
-        video: "",
-        website: "",
-        phone: "",
-        reviews: []
-    };
-
-    // Add the new hotel to the array
-    hotels.push(newHotel);
-
-    // Add the new marker to the map
-    const newMarker = L.marker(newHotel.coords).addTo(map);
-    newMarker.bindPopup(renderPopupContent(newHotel));
+// Search functionality to find hotels by name
+const searchInput = document.getElementById('hotel-search');
+searchInput.addEventListener('input', function() {
+    const query = searchInput.value.toLowerCase();
+    Object.values(markers).forEach(marker => {
+        const hotelName = marker.getPopup().getContent().toLowerCase();
+        if (hotelName.includes(query)) {
+            marker.addTo(map);  // Show marker if it matches the query
+        } else {
+            map.removeLayer(marker);  // Hide marker if it doesn't match
+        }
+    });
 });
