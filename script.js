@@ -28,5 +28,3 @@ document.getElementById('search-input').addEventListener('input', function(event
             L.marker([hotel.lat, hotel.lon]).addTo(map)
                 .bindPopup(`<b>${hotel.name}</b><br><a href="${hotel.videoUrl}" target="_blank">Watch Review</a>`);
         }
-    });
-});
