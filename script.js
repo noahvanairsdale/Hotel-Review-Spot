@@ -1,9 +1,14 @@
-// Initialize the map with center and zoom level
+// Initialize the map with center and zoom level for the USA
 const map = L.map('map', {
-    center: [20, 0],  // Default center of the map (coordinates: 20, 0)
-    zoom: 2,          // Initial zoom level (zoomed out a bit)
-    minZoom: 2,       // Minimum zoom level (prevents zooming out too much)
-    maxZoom: 10       // Maximum zoom level (prevents zooming in too much)
+    center: [39.8283, -98.5795],  // Center of the USA (Kansas)
+    zoom: 4,                      // Initial zoom level
+    minZoom: 4,                   // Minimum zoom level (prevents zooming out too far)
+    maxZoom: 8,                   // Maximum zoom level (prevents zooming in too much)
+    maxBounds: [
+        [24.396308, -125.0],      // Southwest corner (bottom-left) of the USA
+        [49.384358, -66.93457]    // Northeast corner (top-right) of the USA
+    ],                            // Boundaries of the USA (not allowing zoom or panning outside the USA)
+    maxBoundsViscosity: 1.0       // Keeps map within bounds when zooming or panning
 });
 
 // Add OpenStreetMap tiles (base layer)
@@ -12,21 +17,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Example hotel data
+// Example hotel data (USA only)
 const hotels = [
     {
         id: 1,
         name: "Hotel A",
-        coords: [48.8566, 2.3522],
+        coords: [48.8566, -122.3522],  // San Francisco, CA
         video: "https://www.youtube.com/embed/example1",
         website: "https://www.hotela.com",
-        phone: "+33 1 23 45 67 89",
+        phone: "+1 415-555-1234",
         reviews: []
     },
     {
         id: 2,
         name: "Hotel B",
-        coords: [40.7128, -74.0060],
+        coords: [40.7128, -74.0060],  // New York City, NY
         video: "https://www.youtube.com/embed/example2",
         website: "https://www.hotelb.com",
         phone: "+1 212-555-1234",
