@@ -64,8 +64,19 @@ function renderPopupContent(hotel) {
             <form class="review-form" onsubmit="addReview(event, ${hotel.id})">
                 <h4>Add Your Review:</h4>
                 <textarea name="reviewText" placeholder="Write your review..." required></textarea>
-                <input type="text" name="author" placeholder="Your name" required />
-                <input type="text" name="videoLink" placeholder="Optional: Video URL" />
+                <input type="email" name="email" placeholder="Your email (optional)" />
+                <div class="rating">
+                    <input type="radio" id="rating10-${hotel.id}" name="rating-${hotel.id}" value="10" /><label for="rating10-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating9-${hotel.id}" name="rating-${hotel.id}" value="9" /><label for="rating9-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating8-${hotel.id}" name="rating-${hotel.id}" value="8" /><label for="rating8-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating7-${hotel.id}" name="rating-${hotel.id}" value="7" /><label for="rating7-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating6-${hotel.id}" name="rating-${hotel.id}" value="6" /><label for="rating6-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating5-${hotel.id}" name="rating-${hotel.id}" value="5" /><label for="rating5-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating4-${hotel.id}" name="rating-${hotel.id}" value="4" /><label for="rating4-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating3-${hotel.id}" name="rating-${hotel.id}" value="3" /><label for="rating3-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating2-${hotel.id}" name="rating-${hotel.id}" value="2" /><label for="rating2-${hotel.id}">⭐</label>
+                    <input type="radio" id="rating1-${hotel.id}" name="rating-${hotel.id}" value="1" /><label for="rating1-${hotel.id}">⭐</label>
+                </div>
                 <button type="submit">Submit Review</button>
             </form>
         </div>
@@ -79,11 +90,12 @@ function addReview(event, hotelId) {
     const form = event.target;
     const reviewText = form.reviewText.value;
     const author = form.author.value;
-    const videoLink = form.videoLink.value;
+    const email = form.email.value;
+    const rating = form.querySelector('input[name="rating-' + hotelId + '"]:checked') ? form.querySelector('input[name="rating-' + hotelId + '"]:checked').value : 'No rating';
 
     const hotel = hotels.find(h => h.id === hotelId);
     if (hotel) {
-        hotel.reviews.push({ text: reviewText, author, video: videoLink });
+        hotel.reviews.push({ text: reviewText, author, email, rating });
         map.eachLayer(layer => {
             if (layer.getLatLng && layer.getLatLng().equals(hotel.coords)) {
                 layer.setPopupContent(renderPopupContent(hotel));
