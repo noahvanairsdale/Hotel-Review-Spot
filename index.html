@@ -3,58 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Reviews</title>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <title>Interactive Hotel Review Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet"> <!-- Added Raleway font -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-
-<header>
-    <h1>Hotel Reviews</h1>
-</header>
-
-<!-- Search Bar -->
-<div id="search-container">
-    <input type="text" id="search-input" placeholder="Search for a hotel...">
-</div>
-
-<!-- Reviews Section -->
-<div id="reviews-section">
-    <h2>Your Top Review</h2>
-    <div class="hotel-video">
-        <video width="320" height="240" controls>
-            <source src="your-review-video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <div>
-        <p><strong>Hotel Name:</strong> Example Hotel</p>
-        <p><strong>Rating:</strong> 9/10</p>
-        <p><strong>Review:</strong> This hotel was amazing! Highly recommend it!</p>
-        <p><strong>Website:</strong> <a href="https://www.example.com" target="_blank">Visit Website</a></p>
-        <p><strong>Phone:</strong> (123) 456-7890</p>
-    </div>
-</div>
-
-<!-- Map Section -->
-<div id="map"></div>
-
-<!-- User Reviews Form -->
-<div id="user-review-form">
-    <h2>Leave Your Review</h2>
-    <form id="review-form">
-        <input type="email" id="user-email" placeholder="Your email" required>
-        <input type="text" id="hotel-name" placeholder="Hotel Name" required>
-        <input type="number" id="rating" placeholder="Rating (1-10)" min="1" max="10" required>
-        <input type="url" id="youtube-link" placeholder="YouTube Review Link (Optional)">
-        <textarea id="written-review" placeholder="Write your review..." required></textarea>
-        <button type="submit">Submit Review</button>
-    </form>
-</div>
-
-<!-- Leaflet.js and Custom JavaScript -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
-
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
