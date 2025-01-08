@@ -108,3 +108,25 @@ function addReview(event, hotelId) {
 
     form.reset();
 }
+
+// Add new marker on map click
+map.on('click', function (event) {
+    const newMarkerCoords = event.latlng;
+    const newHotelId = hotels.length + 1;
+    const newHotel = {
+        id: newHotelId,
+        name: `New Hotel ${newHotelId}`,
+        coords: [newMarkerCoords.lat, newMarkerCoords.lng],
+        video: "",
+        website: "",
+        phone: "",
+        reviews: []
+    };
+
+    // Add the new hotel to the array
+    hotels.push(newHotel);
+
+    // Add the new marker to the map
+    const newMarker = L.marker(newHotel.coords).addTo(map);
+    newMarker.bindPopup(renderPopupContent(newHotel));
+});
