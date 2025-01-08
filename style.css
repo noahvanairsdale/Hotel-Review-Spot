@@ -1,22 +1,51 @@
+/* Full-screen map */
 #map {
-    height: 100vh; /* Full viewport height */
-    width: 100%; /* Full width */
+    height: 100vh; /* Full screen height */
+    width: 100%;  /* Full screen width */
 }
-.review-popup {
-    text-align: left;
+
+/* Style for search bar */
+.search-container {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
 }
-.review-popup iframe {
-    width: 100%;
-    max-width: 400px;
-    height: 225px;
+
+.search-container input {
+    width: 200px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
-.review-list {
-    margin-top: 10px;
+
+/* Reviews Section Styling */
+.reviews-container {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    width: 300px;
 }
-.review-form {
-    margin-top: 20px;
+
+.review h3 {
+    margin-top: 0;
 }
-.review-form textarea {
-    width: 100%;
-    height: 60px;
+
+/* Responsive Design for Reviews */
+@media screen and (max-width: 768px) {
+    .reviews-container {
+        width: 100%;
+        top: 100px;
+    }
 }
