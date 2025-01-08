@@ -1,61 +1,38 @@
-/* Basic styling */
+/* Global Styles */
 body {
     font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 100vh;
 }
 
 header {
     background-color: #333;
     color: white;
-    width: 100%;
+    padding: 15px;
     text-align: center;
-    padding: 20px;
 }
 
 #search-container {
-    margin: 20px;
-}
-
-#search-input {
     padding: 10px;
-    width: 60%;
-    font-size: 1.2rem;
+    text-align: center;
 }
 
-#map {
-    height: 50%;
-    width: 100%;
-}
-
-.hotel-info, #user-reviews {
-    background-color: white;
-    padding: 20px;
-    margin: 20px;
+input[type="text"], input[type="email"], input[type="url"], textarea {
     width: 80%;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.hotel-info h2, #user-reviews h2 {
-    margin-top: 0;
-}
-
-textarea, input[type="text"], input[type="email"], input[type="url"], input[type="number"] {
-    width: 100%;
     padding: 10px;
     margin: 10px 0;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+}
+
+textarea {
+    height: 150px;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     background-color: #333;
     color: white;
     font-size: 1rem;
@@ -65,4 +42,31 @@ button {
 
 button:hover {
     background-color: #444;
+}
+
+/* Reviews Section */
+#reviews-section {
+    padding: 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+#reviews-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+/* Map Section */
+#map {
+    height: 50vh;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* User Review Form */
+#user-review-form {
+    padding: 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin-top: 20px;
 }
