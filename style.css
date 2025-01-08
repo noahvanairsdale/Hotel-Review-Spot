@@ -1,103 +1,56 @@
-/* General styles */
-body {
-    font-family: 'Raleway', sans-serif; /* Apply Raleway font globally */
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #f4f4f4;
-}
-
-/* Map container */
 #map {
-    height: 100vh; /* Full viewport height */
-    width: 100%; /* Full width */
+    height: 100vh;
 }
 
-/* Popup container styling */
+#search-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
 .review-popup {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
+    text-align: left;
 }
 
-/* Styling for iframe (video) inside the popup */
 .review-popup iframe {
     width: 100%;
-    max-width: 100%;
+    max-width: 400px;
     height: 225px;
-    border-radius: 8px;
-    margin-bottom: 15px;
 }
 
-/* Styling for review list */
 .review-list {
     margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #e0e0e0;
 }
 
-/* Form styling */
 .review-form {
     margin-top: 20px;
 }
 
-/* Input and textarea styling */
-.review-form textarea,
-.review-form input[type="text"],
-.review-form input[type="email"],
-.review-form select {
+.review-form textarea {
+    width: 100%;
+    height: 60px;
+}
+
+.review-form input, .review-form select, .review-form button {
     width: 100%;
     padding: 10px;
-    margin: 8px 0;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 14px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-.review-form textarea {
-    height: 80px;
-}
-
-/* Rating select styling */
-.review-form select {
-    cursor: pointer;
-}
-
-/* Submit button styling */
 .review-form button {
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
 }
 
 .review-form button:hover {
-    background-color: #0056b3;
-}
-
-.review-form h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.review-form p {
-    margin: 5px 0;
-    font-size: 13px;
-    color: #666;
-}
-
-.review-popup h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-/* Optional styling for email input (lighter border) */
-.review-form input[type="email"] {
-    font-family: 'Raleway', sans-serif;
+    background-color: #45a049;
 }
